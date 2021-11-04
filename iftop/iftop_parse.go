@@ -24,11 +24,29 @@ func main() {
 	}
 	// this has the indended effect of splitting words out
 	readFile.Close()
-	println(fileTextLines)
 
-	words := strings.Fields(fileTextLines[4])
-	num, ip, dir, two, ten, fourty, totes := words[0], words[1], words[2], words[3], words[4], words[5], words[6]
-	println(num, ip, dir, two, ten, fourty, totes)
+	start, end, line := 3, (len(fileTextLines) - 9), 1
+
+	num := make(map[int]string)
+	ip := make(map[int]string)
+	dir := make(map[int]string)
+	two := make(map[int]string)
+	ten := make(map[int]string)
+	fourty := make(map[int]string)
+	totes := make(map[int]string)
+
+	for line <= end {
+		if line > start {
+			words := strings.Fields(fileTextLines[line])
+			if line%2 == 0 {
+				num[line], ip[line], dir[line], two[line], ten[line], fourty[line], totes[line] = words[0], words[1], words[2], words[3], words[4], words[5], words[6]
+			} else {
+				ip[line], dir[line], two[line], ten[line], fourty[line], totes[line] = words[0], words[1], words[2], words[3], words[4], words[5]
+			}
+		}
+		println(num[line], ip[line], dir[line], two[line], ten[line], fourty[line], totes[line])
+		line++
+	}
 	/*
 			// for each line from file process based on string position
 			var ip []string
