@@ -9,15 +9,20 @@ import (
 	"bufio"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 
 	iftopParse "github.com/common-guid/pfexporter/iftop"
 	"github.com/fsnotify/fsnotify"
 )
 
-var fileLoc string = "/home/guid/Work/go-projects/pfexporter/iftop/file_watch/if2.txt"
+var fileLoc string = "/home/guid/Work/go-projects/pfexporter/if2.txt"
 
 func main() {
+	http.HandleFunc("iftop/iftop.txt", func(rw http.ResponseWriter, req *http.Request) { // testing this <---------
+		http.ServeFile(rw, req, req.URL.Path[1:]) // testing this <--------------
+
+	})
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
 		log.Fatal(err)
@@ -36,10 +41,13 @@ func main() {
 				if event.Op&fsnotify.Write == fsnotify.Write {
 					//  log.Println("modified file:", event.Name)
 
-					// so that parse will not be trigged by the deleting of file
+					// I think prom is blocking the loop from continuing
 					if fileLen() > 1 {
 						iftopParse.Parse()
+						//delete file - put somewhere
+						//os.Remove(fileLoc)
 						iftopParse.Prom()
+						fmt.Println("past prom")
 					}
 				}
 			case err, ok := <-watcher.Errors:

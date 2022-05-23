@@ -11,7 +11,6 @@ import (
 	"strings"
 
 	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 var (
@@ -32,7 +31,7 @@ var (
 // add in cumulative list [x]
 // file monitoring to fetch updated  [x]
 func Parse() {
-	readFile, err := os.Open("/home/guid/Work/go-projects/pfexporter/iftop/iftop.txt")
+	readFile, err := os.Open("/home/guid/Work/go-projects/pfexporter/if2.txt")
 
 	if err != nil {
 		log.Fatalf("failed to open file: %s", err)
@@ -196,6 +195,31 @@ func Prom() {
 			ip_receiver.Add(float64(b10s[line]))
 		}
 	}
-	http.Handle("/metrics", promhttp.Handler())
 	log.Fatal(http.ListenAndServe("0.0.0.0:8080", nil))
+	println("past listen")
+	/*
+		// new from here to original
+		r := mux.NewRouter()
+		s := &http.Server{
+			Addr:           ":8080",
+			ReadTimeout:    8 * time.Second,
+			WriteTimeout:   8 * time.Second,
+			IdleTimeout:    10 * time.Second,
+			MaxHeaderBytes: 1 << 20,
+			Handler:        r,
+		}
+		i := 0
+		for i < 5 {
+			if err := s.ListenAndServe(); err != nil {
+				fmt.Printf("Closed: %s\n", err)
+				time.Sleep(1 * time.Second)
+				i++
+			}
+		}
+		println("past listen")
+
+
+			http.Handle("/metrics", promhttp.Handler())
+
+	*/
 }

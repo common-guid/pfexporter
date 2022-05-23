@@ -1,0 +1,24 @@
+# HELP lan_network_receive_bytes Received bytes for network interface
+# TYPE lan_network_receive_bytes gauge
+lan_network_receive_bytes{device="eth0"} 0.0
+lan_network_receive_bytes{device="eth1"} 0.0
+lan_network_receive_bytes{device="eth2"} 0.0
+lan_network_receive_bytes{device="eth3"} 0.0
+lan_network_receive_bytes{device="wl0"} 737476060.0
+# HELP lan_network_send_bytes Sent bytes for network interface
+# TYPE lan_network_send_bytes gauge
+lan_network_send_bytes{device="eth0"} 363957004.0
+lan_network_send_bytes{device="eth1"} 0.0
+lan_network_send_bytes{device="eth2"} 0.0
+lan_network_send_bytes{device="eth3"} 0.0
+lan_network_send_bytes{device="wl0"} 2147483647.0
+# HELP lan_network_receive_packets Received packets for network interface
+# TYPE lan_network_receive_packets gauge
+lan_network_receive_packets{device="eth0",disp
+
+from >> https://mike42.me/blog/2018-08-monitoring-network-throughput
+
+# HELP
+# TYPE
+out{ip='addr'} value
+in {ip='addr'} value
